@@ -5,7 +5,10 @@
   "main": "Server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon Server.js"
+    "start": "node Server.js -p 4444"
+  },
+    "engines": {
+    "node": ">=20.14.0"
   },
   "author": "Pals Bangladesh Ltd.",
   "license": "ISC",
