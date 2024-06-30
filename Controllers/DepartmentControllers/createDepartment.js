@@ -5,7 +5,7 @@ const path = require('path');
 const { DepartmentModel } = require("../../Models/DepartmentModel");
 const formidable = require('formidable');
 const { formDataToObj } = require('../../Functions/formDataToObj');
-const { saveAndGetFile } = require('../../Functions/SaveAndGetFile');
+const { saveAndGetFile } = require('../../Functions/saveAndGetFile');
 const { cleanObject } = require('../../Functions/cleanObject');
 
 
