@@ -35,7 +35,7 @@ const createDepartment = async (req, res) => {
             if (promotionalImage) {
 
                 promotionalImage.then(promotionalImage => {
-                    
+
                     department.promotionalImage = promotionalImage
 
                     department.save()
@@ -66,30 +66,3 @@ const createDepartment = async (req, res) => {
 }
 
 module.exports.createDepartment = createDepartment
-
-// const department = new DepartmentModel({
-//     name: fields.name,
-//     description: fields.description,
-//     featureImage: {
-//         contentType: file.mimeType,
-//         name: file.name,
-//         data: fs.readFileSync(newPath)
-//     },
-//     status: fields.status,
-//     verified: fields.verified,
-//     promotionalImage: {
-//         contentType: fields.promotionalImageContentType,
-//         name: fields.promotionalImageName,
-//         data: fs.readFileSync(fields.promotionalImagePath)
-//     },
-//     promotionalDescription: fields.promotionalDescription,
-//     promotionalLink: fields.promotionalLink
-// });
-
-// department.save()
-//     .then(department => {
-//         res.send({ message: 'Department created successfully', error: false, data: department });
-//     })
-//     .catch(err => {
-//         res.send({ message: 'Something went wrong', error: true, data: err.message });
-//     });
