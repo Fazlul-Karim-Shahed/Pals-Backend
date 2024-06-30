@@ -22,7 +22,8 @@ const AdminModel = model('Admin', new Schema({
     image: { contentType: String, type: Object, name: String },
     nidFrontImage: { contentType: String, type: Object, name: String, required: [true, "NID front image is required"] },
     nidBackImage: { contentType: String, type: Object, name: String, required: [true, "NID Back image is required"] },
-    emailVerified: { type: Boolean, default: false }
+    emailVerified: { type: Boolean, default: false, required: true},
+    superAdminVerified: { type: Boolean, default: false, required: true },
 
 
 

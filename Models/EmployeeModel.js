@@ -29,7 +29,8 @@ const EmployeeModel = model('Employee', new Schema({
     nidFrontImage: { contentType: String, type: Object, name: String, required: true },
     nidBackImage: { contentType: String, type: Object, name: String, required: true },
     image: { contentType: String, type: Object, name: String },
-    emailVerified: { type: Boolean, default: false }
+    emailVerified: { type: Boolean, default: false, required: true },
+    superAdminVerified: { type: Boolean, default: false, required: true },
 
 }, { timestamps: true }))
 

@@ -10,6 +10,7 @@ const compression = require("compression");
 const _ = require("lodash");
 const path = require("path");
 const AuthRouters = require("./Routers/AuthRouters");
+const DepartmentRouters = require("./Routers/DepartmentRouters");
 
 // ------------ Configuration ------------  //
 
@@ -61,6 +62,7 @@ app.use('/api/uploads/:name', (req, res) => {
 });
 
 app.use('/api/auth', AuthRouters)
+app.use('/api/department', DepartmentRouters)
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 
