@@ -26,18 +26,14 @@ app.use(compression());
 
 // Local DB
 // mongoose.connect(process.env.MONGODB_LOCAL + '/Pals')
-//     .then(data => console.log('Successfully connected to Pals MongoDB Server'))
+//     .then(data => console.log('Successfully connected to PALS MongoDB Server'))
 //     .catch(data => {
 //         console.log(data);
-//         console.log('Something went wrong with MongoDB Server')
+//         console.log('Something went wrong with MongoDB Local Server')
 //     })
 
 
 // ------------ Database ------------  //
-// const DB = process.env.MONGODB_DATABASE.replace(
-//   "<password>",
-//   process.env.MONGODB_PASS
-// );
 const DB = process.env.MONGODB_DATABASE
 mongoose.set("strictQuery", false);
 mongoose
@@ -45,7 +41,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((data) => console.log("Successfully connected to MongoDB Server!"))
+  .then((data) => console.log("Successfully connected to PALS MongoDB Remote Server!"))
   .catch((data) => {
     console.log("Something went wrong with MongoDB Server");
     console.log(data);

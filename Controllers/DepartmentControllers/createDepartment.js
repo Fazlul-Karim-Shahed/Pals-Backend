@@ -43,7 +43,7 @@ const createDepartment = async (req, res) => {
                             res.send({ message: 'Department created successfully', error: false, data: department });
                         })
                         .catch(err => {
-                            res.send({ message: 'Something went wrong', error: true, data: err.message });
+                            res.send({ message: err.message, error: true });
                         });
                 })
             }
@@ -53,7 +53,7 @@ const createDepartment = async (req, res) => {
                         res.send({ message: 'Department created successfully', error: false, data: department });
                     })
                     .catch(err => {
-                        res.send({ message: 'Something went wrong', error: true, data: err.message });
+                        res.send({ message: err.message, error: true, data: err.message });
                     });
             }
 
