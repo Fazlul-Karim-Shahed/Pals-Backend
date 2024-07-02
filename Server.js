@@ -26,7 +26,7 @@ app.use(compression());
 
 // Local DB
 // mongoose.connect(process.env.MONGODB_LOCAL + '/Pals')
-//     .then(data => console.log('Successfully connected to PALS MongoDB Server'))
+//     .then(data => console.log('Successfully connected to PALS MongoDB Local Server'))
 //     .catch(data => {
 //         console.log(data);
 //         console.log('Something went wrong with MongoDB Local Server')
