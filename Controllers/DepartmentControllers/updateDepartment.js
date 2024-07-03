@@ -29,7 +29,6 @@ const updateDepartment = async (req, res) => {
 
         if (files && Object.keys(files).length != 0) {
 
-            // Check if promotionalImage and featureImage are present
             let promotionalImage = files.promotionalImage ? saveAndGetFile(files.promotionalImage[0]) : null
             let featureImage = files.featureImage ? saveAndGetFile(files.featureImage[0]) : null
 

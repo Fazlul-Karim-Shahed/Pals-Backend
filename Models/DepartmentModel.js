@@ -12,6 +12,7 @@ const DepartmentModel = model('Department', new Schema({
     promotionalImage: { contentType: String, type: Object, name: String },
     promotionalDescription: { type: String },
     promotionalLink: { type: String, },
+    visible: { type: Boolean, default: false, required: true },
 
 }, { timestamps: true }))
 
