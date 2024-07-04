@@ -11,6 +11,7 @@ const _ = require("lodash");
 const path = require("path");
 const AuthRouters = require("./Routers/AuthRouters");
 const DepartmentRouters = require("./Routers/DepartmentRouters");
+const CategoryRouters = require("./Routers/CategoryRouters");
 
 // ------------ Configuration ------------  //
 
@@ -26,11 +27,15 @@ app.use(compression());
 
 // Local DB
 // mongoose.connect(process.env.MONGODB_LOCAL + '/Pals')
-//     .then(data => console.log('Successfully connected to PALS MongoDB Local Server'))
-//     .catch(data => {
-//         console.log(data);
-//         console.log('Something went wrong with MongoDB Local Server')
-//     })
+//   .then(data => console.log('Successfully connected to PALS MongoDB Local Server.'))
+//   .catch(data => {
+//     console.log(data);
+//     console.log('Something went wrong with MongoDB Local Server')
+//   })
+
+// console.log(`Database: ${data.connections[0].name}. \n Host: ${data.connections[0].host}. \n Port: ${data.connections[0].port}. \n URI: ${data.connections[0].host}:${data.connections[0].port}/${data.connections[0].name}. \n Models:`, data.models, `\n Successfully connected to PALS MongoDB Local Server.`)
+
+
 
 
 // ------------ Database ------------  //
@@ -54,25 +59,26 @@ mongoose
 
 
 app.use('/api/uploads/:name', (req, res) => {
-    res.sendFile(path.resolve('./uploads/' + req.params.name))
+  res.sendFile(path.resolve('./uploads/' + req.params.name))
 });
 
 app.use('/api/auth', AuthRouters)
 app.use('/api/department', DepartmentRouters)
+app.use('/api/category', CategoryRouters)
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 
 
 // Express async error handlers
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 // ------------ Server ------------ //
 
 const port = 4444
 app.listen(port, () => {
-    console.log('Server is running on port ' + port);
+  console.log('Server is running on port ' + port);
 })
 
