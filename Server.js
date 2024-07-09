@@ -12,6 +12,9 @@ const path = require("path");
 const AuthRouters = require("./Routers/AuthRouters");
 const DepartmentRouters = require("./Routers/DepartmentRouters");
 const CategoryRouters = require("./Routers/CategoryRouters");
+const BrandRouters = require("./Routers/BrandRouters");
+const SubBrandRouters = require("./Routers/SubBrandRouters");
+const SubCategoryRouters = require("./Routers/SubCategoryRouters");
 
 // ------------ Configuration ------------  //
 
@@ -65,6 +68,9 @@ app.use('/api/uploads/:name', (req, res) => {
 app.use('/api/auth', AuthRouters)
 app.use('/api/department', DepartmentRouters)
 app.use('/api/category', CategoryRouters)
+app.use('/api/brand', BrandRouters)
+app.use('/api/sub-brand', SubBrandRouters)
+app.use('/api/sub-category', SubCategoryRouters)
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 
