@@ -1,6 +1,4 @@
 
-
-
 const express = require("express");
 require("express-async-errors");
 const dotenv = require("dotenv");
@@ -15,6 +13,8 @@ const CategoryRouters = require("./Routers/CategoryRouters");
 const BrandRouters = require("./Routers/BrandRouters");
 const SubBrandRouters = require("./Routers/SubBrandRouters");
 const SubCategoryRouters = require("./Routers/SubCategoryRouters");
+const BatchRouters = require("./Routers/BatchRouters");
+const ProductRouters = require("./Routers/ProductRouters");
 
 // ------------ Configuration ------------  //
 
@@ -71,6 +71,8 @@ app.use('/api/category', CategoryRouters)
 app.use('/api/brand', BrandRouters)
 app.use('/api/sub-brand', SubBrandRouters)
 app.use('/api/sub-category', SubCategoryRouters)
+app.use('/api/batch', BatchRouters)
+app.use('/api/product', ProductRouters)
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 

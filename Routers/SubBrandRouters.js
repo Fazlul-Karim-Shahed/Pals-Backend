@@ -1,6 +1,6 @@
 const { createSubBrand } = require('../Controllers/SubBrandControllers/createSubBrand')
 const { deleteSubBrand } = require('../Controllers/SubBrandControllers/deleteSubBrand')
-const { getAllSubBrand } = require('../Controllers/SubBrandControllers/getAllBrand')
+const { getAllSubBrand } = require('../Controllers/SubBrandControllers/getAllSubBrand')
 const { getASubBrand } = require('../Controllers/SubBrandControllers/getASubBrand')
 const { getSubBrandByCategory } = require('../Controllers/SubBrandControllers/getSubBrandByCategory')
 const { updateSubBrand } = require('../Controllers/SubBrandControllers/updateSubBrand')

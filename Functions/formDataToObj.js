@@ -1,22 +1,57 @@
+function formDataToObj(formData) {
+    const result = {};
 
-const FormData = require("form-data")
+    for (let key in formData) {
+        if (formData.hasOwnProperty(key)) {
+            const value = formData[key];
 
+            const nestedKeyMatch = key.match(/([^\[\]]+)\[([0-9]+)\]\[([^\[\]]+)\]/);
+            const arrayKeyMatch = key.match(/([^\[\]]+)\[\]/);
+            const objectKeyMatch = key.match(/([^\[\]]+)\[([^\[\]]+)\]/);
 
+            if (nestedKeyMatch) {
+                const mainKey = nestedKeyMatch[1];
+                const index = parseInt(nestedKeyMatch[2]);
+                const subKey = nestedKeyMatch[3];
 
-const formDataToObj = (fields) => {
-    let obj = {};
-    for (let key in fields) {
-        if (fields.hasOwnProperty(key)) {
-            // Remove '[]' from the key if it exists
-            let newKey = key.replace('[]', '');
-            // If the field has only one value, take the first element
-            // Otherwise, keep it as an array
-            obj[newKey] = fields[key].length === 1 ? fields[key][0] : fields[key];
+                if (!result[mainKey]) {
+                    result[mainKey] = [];
+                }
+
+                if (!result[mainKey][index]) {
+                    result[mainKey][index] = {};
+                }
+
+                result[mainKey][index][subKey] = convertValue(value[0]);
+            } else if (arrayKeyMatch) {
+                const mainKey = arrayKeyMatch[1];
+                result[mainKey] = value.map(convertValue);
+            } else if (objectKeyMatch) {
+                const mainKey = objectKeyMatch[1];
+                const subKey = objectKeyMatch[2];
+
+                if (!result[mainKey]) {
+                    result[mainKey] = {};
+                }
+
+                result[mainKey][subKey] = convertValue(value[0]);
+            } else {
+                result[key] = convertValue(value[0]);
+            }
         }
     }
-    return obj;
 
-
+    return result;
 }
 
-module.exports.formDataToObj = formDataToObj
+function convertValue(value) {
+    if (value === 'true' || value === 'false') {
+        return value === 'true';
+    }
+    if (!isNaN(value)) {
+        return Number(value);
+    }
+    return value;
+}
+
+module.exports.formDataToObj = formDataToObj;

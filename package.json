@@ -8,7 +8,7 @@
     "start": "node Server.js -p 4444"
   },
   "engines": {
-    "node": ">=20.14.0"
+    "node": ">=20.16.0"
   },
   "author": "Pals Bangladesh Ltd.",
   "license": "ISC",
