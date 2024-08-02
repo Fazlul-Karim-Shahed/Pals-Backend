@@ -16,5 +16,5 @@ const getAllSubCategory = async (req, res) => {
 
 
 }
- 
+
 module.exports.getAllSubCategory = getAllSubCategory
