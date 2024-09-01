@@ -24,7 +24,13 @@ const updateProduct = async (req, res) => {
 
         fields = cleanObject(formDataToObj(fields));
 
+
         Object.assign(product, fields);
+
+        product.sizes = fields.sizes ? fields.sizes : []
+        product.colors = fields.colors ? fields.colors : []
+
+
 
         let imageList = files && files['imageList[]'] && files['imageList[]'].length > 0 ? saveMultipleFile(files['imageList[]']) : null
 

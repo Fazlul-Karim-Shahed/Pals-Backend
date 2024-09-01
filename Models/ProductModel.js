@@ -29,9 +29,6 @@ const ProductModel = model('Product', new Schema({
     colors: [{ type: Object, color: String, stock: Number, image: String }],
     sizes: [{ type: Object, size: String, stock: Number, referenceColor: String }],
 
-
-
-
 }, { timestamps: true }))
 
 
