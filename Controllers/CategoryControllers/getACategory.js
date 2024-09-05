@@ -5,8 +5,6 @@ const { CategoryModel } = require("../../Models/CategoryModel")
 
 const getACategory = async (req, res) => {
 
-    console.log(req.params)
-
     let category = await CategoryModel.findOne({ _id: req.params.categoryId }).populate('departmentId')
 
     if (category) {

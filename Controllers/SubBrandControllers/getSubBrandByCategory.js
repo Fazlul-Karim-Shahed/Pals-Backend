@@ -5,8 +5,6 @@ const { SubBrandModel } = require("../../Models/SubBrandModel")
 
 const getSubBrandByCategory = async (req, res) => {
 
-    console.log(req.params)
-
     let subBrand = await SubBrandModel.find({ categoryId: req.params.categoryId }).populate(['departmentId', 'categoryId', 'brandId'])
 
     if (subBrand.length != 0) {

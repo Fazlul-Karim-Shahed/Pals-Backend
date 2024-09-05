@@ -14,7 +14,7 @@ const router = require('express').Router()
 
 router.get('/', getAllProduct)
 router.get('/:productId', getAProduct)
-router.put('/:productId', updateProduct)
+router.put('/:productId', roleCheck(['admin']), updateProduct)
 router.delete('/:productId', deleteProduct)
 router.post('/', roleCheck(['admin']), createProduct)
 

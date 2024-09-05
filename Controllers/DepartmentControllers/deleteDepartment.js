@@ -4,8 +4,6 @@ const { DepartmentModel } = require("../../Models/DepartmentModel")
 
 const deleteDepartment = async (req, res) => {
 
-    console.log(req.params)
-
     let department = await DepartmentModel.deleteOne({ _id: req.params.departmentId })
 
     if (department.deletedCount != 0) {

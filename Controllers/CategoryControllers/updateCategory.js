@@ -17,8 +17,6 @@ const updateCategory = async (req, res) => {
 
     let category = await CategoryModel.findOne({ _id: req.params.categoryId })
 
-    console.log(req.params)
-
 
     form.parse(req, (err, fields, files) => {
         if (err) {
