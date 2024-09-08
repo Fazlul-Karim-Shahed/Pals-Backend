@@ -8,7 +8,7 @@ const { OrderModel } = require("../../Models/OrderModel")
 
 const getAllOrders = async (req, res) => {
 
-    let order = await OrderModel.find()
+    let order = await OrderModel.find().sort({ orderDate: -1 })
 
     if (order.length != 0) {
 
