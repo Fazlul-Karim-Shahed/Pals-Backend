@@ -46,6 +46,7 @@ const createOrder = async (req, res) => {
 
 
     let order = new OrderModel(cleanObject(req.body))
+    order.orderNo = new Date().getUTCDate() + '-' + new Date().getUTCMonth() + '-' + (await OrderModel.countDocuments() + 1)
 
 
     order.save()
@@ -74,7 +75,7 @@ const createOrder = async (req, res) => {
                     })
                 }
 
-                ProductModel.findByIdAndUpdate(product._id, product).then(product => {}).catch(err => { res.status(400).json({ message: `Failed to update product ${product.name}`, error: err }) })
+                ProductModel.findByIdAndUpdate(product._id, product).then(product => { }).catch(err => { res.status(400).json({ message: `Failed to update product ${product.name}`, error: err }) })
             }
 
 

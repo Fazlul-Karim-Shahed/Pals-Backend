@@ -6,6 +6,7 @@ const { model, Schema } = require('mongoose')
 
 const OrderModel = model('Order', new Schema({
 
+    orderNo: { type: String, required: [true, "Order No is required"] },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     orderTaker: { type: Object },
     name: { type: String, required: [true, "Name is required"] },
@@ -25,7 +26,7 @@ const OrderModel = model('Order', new Schema({
     }],
 
     totalPrice: { type: Number, required: true },
-    
+
     discount: { type: Number },
     paymentMethod: { type: String, required: [true, "Payment Method is required"], default: 'Cash on Delivery', enum: ['Cash on Delivery', 'Bkash', 'Nagad', 'Card', 'Bank'] },
 
@@ -40,6 +41,8 @@ const OrderModel = model('Order', new Schema({
     orderDate: { type: Date, default: Date.now },
 
     orderNotes: { type: String },
+
+    deliveryCharge: { type: Number },
 
 }, { timestamps: true }))
 
