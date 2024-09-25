@@ -1,8 +1,8 @@
 
 
-const { cancelOrder } = require('../Controllers/OrderController/cancelOrder')
 const { createOrder } = require('../Controllers/OrderController/createOrder')
 const { getAllOrders } = require('../Controllers/OrderController/getAllOrders')
+const { updateOrderStatus } = require('../Controllers/OrderController/updateOrderStatus')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 
@@ -11,8 +11,8 @@ const router = require('express').Router()
 
 router.get('/', getAllOrders)
 router.post('/', roleCheck(['admin']), createOrder)
-router.put('/:orderId/cancel', roleCheck(['admin']), cancelOrder)
-router.delete('/:orderId', roleCheck(['admin']), cancelOrder)
+router.put('/:orderId', roleCheck(['admin']), updateOrderStatus)
+router.delete('/:orderId', roleCheck(['admin']))
 
 
 module.exports = router

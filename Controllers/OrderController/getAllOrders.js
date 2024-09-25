@@ -8,7 +8,7 @@ const { OrderModel } = require("../../Models/OrderModel")
 
 const getAllOrders = async (req, res) => {
 
-    let order = await OrderModel.find().sort({ orderDate: -1 })
+    let order = await OrderModel.find().sort({ orderDate: -1 }).populate({ path: 'orderList.productId', model: 'Product' })
 
     if (order.length != 0) {
 

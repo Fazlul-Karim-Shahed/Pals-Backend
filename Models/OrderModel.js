@@ -36,7 +36,7 @@ const OrderModel = model('Order', new Schema({
 
     deliveryMethod: { type: String, required: [true, "Delivery method is required"] },
 
-    orderStatus: { type: String, required: [true, "Order Status is required"], default: 'Pending', enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] },
+    orderStatus: { type: String, required: [true, "Order Status is required"], default: 'Pending', enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Pending Return', 'Returned', 'Cancelled'] },
 
     orderDate: { type: Date, default: Date.now },
 
