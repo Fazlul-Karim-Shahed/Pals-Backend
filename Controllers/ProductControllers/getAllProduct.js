@@ -2,12 +2,55 @@
 
 
 
+const { cleanObject } = require("../../Functions/cleanObject")
 const { ProductModel } = require("../../Models/ProductModel")
+const { DepartmentModel } = require("../../Models/DepartmentModel")
+const { CategoryModel } = require("../../Models/CategoryModel")
+const { SubCategoryModel } = require("../../Models/SubCategoryModel")
+const { SubBrandModel } = require("../../Models/SubBrandModel")
+const { BrandModel } = require("../../Models/BrandModel")
 
 
 const getAllProduct = async (req, res) => {
 
-    let products = await ProductModel.find({ verified: true }).populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId'])
+    let searchParams = cleanObject(req.body)
+
+    if (searchParams.hasOwnProperty("department")) {
+        await DepartmentModel.findOne({ name: searchParams.department }).then(department => {
+            searchParams.departmentId = department._id
+            delete searchParams.department
+        })
+    }
+
+    if (searchParams.hasOwnProperty("category")) {
+        await CategoryModel.findOne({ name: searchParams.category }).then(category => {
+            searchParams.categoryId = category._id
+            delete searchParams.category
+        })
+    }
+
+    if (searchParams.hasOwnProperty("subcategory")) {
+        await SubCategoryModel.findOne({ name: searchParams.subcategory }).then(subCategory => {
+            searchParams.subCategoryId = subCategory._id
+            delete searchParams.subcategory
+        })
+    }
+    if (searchParams.hasOwnProperty("subbrand")) {
+        await SubBrandModel.findOne({ name: searchParams.subbrand }).then(subBrand => {
+            searchParams.subBrandId = subBrand._id
+            delete searchParams.subbrand
+        })
+    }
+
+    if (searchParams.hasOwnProperty("brand")) {
+        await BrandModel.findOne({ name: searchParams.brand }).then(brand => {
+            searchParams.brandId = brand._id
+            delete searchParams.brand
+        })
+    }
+
+
+    let products = await ProductModel.find({ verified: true, ...searchParams }).populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId']).limit(req.query.limit)
 
     if (products.length != 0) {
 

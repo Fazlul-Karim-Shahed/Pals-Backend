@@ -8,7 +8,7 @@ const ProductModel = model('Product', new Schema({
     categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: [true, "Category is required"] },
     subCategoryId: { type: Schema.Types.ObjectId, ref: 'SubCategory', required: [true, "Sub Category is required"] },
     brandId: { type: Schema.Types.ObjectId, ref: 'Brand', required: [true, "Brand is required"] },
-    subBrandId: { type: Schema.Types.ObjectId },
+    subBrandId: { type: Schema.Types.ObjectId, ref: 'SubBrand' },
     verified: { type: Boolean, default: false, required: true },
 
     name: { type: String, required: [true, "Category name is required"] },
