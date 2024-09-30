@@ -4,7 +4,8 @@ const { SubCategoryModel } = require("../../Models/SubCategoryModel")
 
 const getAllSubCategory = async (req, res) => {
 
-    let subCategory = await SubCategoryModel.find().populate(['departmentId', 'categoryId'])
+
+    let subCategory = !req.body ? await SubCategoryModel.find().populate(['departmentId', 'categoryId']) : await SubCategoryModel.find(req.body).populate(['departmentId', 'categoryId'])
 
     if (subCategory.length != 0) {
 

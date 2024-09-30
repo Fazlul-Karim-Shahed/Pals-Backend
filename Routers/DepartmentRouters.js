@@ -10,7 +10,7 @@ const { roleCheck } = require('../Middlewares/roleCheck')
 
 const router = require('express').Router()
 
-router.get('/', getAllDepartment)
+router.post('/get', getAllDepartment)
 router.post('/', roleCheck(['admin']), createDepartment)
 router.put('/:departmentId', roleCheck(['admin']), updateDepartment)
 router.delete('/:departmentId', roleCheck(['admin']), deleteDepartment)

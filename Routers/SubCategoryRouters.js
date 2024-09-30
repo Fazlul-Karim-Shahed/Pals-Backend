@@ -11,7 +11,7 @@ const { roleCheck } = require('../Middlewares/roleCheck')
 
 const router = require('express').Router()
 
-router.get('/', getAllSubCategory)
+router.post('/get', getAllSubCategory)
 router.get('/:subCategoryId', getASubCategory)
 router.get('/category/:categoryId', getSubCategoryByCategory)
 router.post('/', roleCheck(['admin']), createSubCategory)

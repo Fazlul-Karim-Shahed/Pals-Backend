@@ -3,7 +3,9 @@ const { DepartmentModel } = require("../../Models/DepartmentModel")
 
 const getAllDepartment = async (req, res) => {
 
-    let department = await DepartmentModel.find()
+
+
+    let department = !req.body ? await DepartmentModel.find() : await DepartmentModel.find(req.body)
 
     if (department.length != 0) {
 
