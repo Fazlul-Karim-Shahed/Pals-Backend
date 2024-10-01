@@ -23,6 +23,7 @@ const getAllProduct = async (req, res) => {
     }
 
     if (searchParams.hasOwnProperty("category")) {
+
         await CategoryModel.findOne({ name: searchParams.category }).then(category => {
             searchParams.categoryId = category._id
             delete searchParams.category
@@ -48,6 +49,31 @@ const getAllProduct = async (req, res) => {
             delete searchParams.brand
         })
     }
+    if (searchParams.hasOwnProperty("color")) {
+        searchParams["colors"] = { $elemMatch: { color: searchParams.color } };
+        delete searchParams.color
+    }
+
+    if (searchParams.hasOwnProperty("size")) {
+        searchParams["sizes"] = { $elemMatch: { size: Number(searchParams.size) } };
+        delete searchParams.size
+    }
+
+    if (searchParams.hasOwnProperty("min")) {
+
+        searchParams.sellingPrice = {};
+        searchParams.sellingPrice.$gte = parseFloat(searchParams.min);
+        delete searchParams.min;
+
+    }
+
+
+    if (searchParams.hasOwnProperty("max")) {
+        searchParams.sellingPrice = {};
+        searchParams.sellingPrice.$lte = parseFloat(searchParams.max); // Set the maximum price
+        delete searchParams.max;
+    }
+
 
 
     let products = await ProductModel.find({ verified: true, ...searchParams }).populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId']).limit(req.query.limit)
