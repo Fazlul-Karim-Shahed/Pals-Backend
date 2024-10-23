@@ -14,6 +14,10 @@ const { BrandModel } = require("../../Models/BrandModel")
 const getAllProduct = async (req, res) => {
 
     let searchParams = cleanObject(req.body)
+    
+    if (searchParams.hasOwnProperty("max") || searchParams.hasOwnProperty("min")) {
+        searchParams.sellingPrice = {};
+    }
 
     if (searchParams.hasOwnProperty("department")) {
         await DepartmentModel.findOne({ name: searchParams.department }).then(department => {
@@ -61,7 +65,6 @@ const getAllProduct = async (req, res) => {
 
     if (searchParams.hasOwnProperty("min")) {
 
-        searchParams.sellingPrice = {};
         searchParams.sellingPrice.$gte = parseFloat(searchParams.min);
         delete searchParams.min;
 
@@ -69,7 +72,6 @@ const getAllProduct = async (req, res) => {
 
 
     if (searchParams.hasOwnProperty("max")) {
-        searchParams.sellingPrice = {};
         searchParams.sellingPrice.$lte = parseFloat(searchParams.max); // Set the maximum price
         delete searchParams.max;
     }

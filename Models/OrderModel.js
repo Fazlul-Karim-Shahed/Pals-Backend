@@ -12,7 +12,7 @@ const OrderModel = model('Order', new Schema({
     name: { type: String, required: [true, "Name is required"] },
     email: { type: String },
     phone: { type: String, required: [true, "Phone is required"] },
-    billingAddress: { type: String, required: [true, "Billing Address is required"] },
+    billingAddress: { type: String },
     shippingAddress: { type: String, required: [true, "Shipping Address is required"] },
 
     orderList: [{

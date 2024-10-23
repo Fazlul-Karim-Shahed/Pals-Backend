@@ -26,7 +26,7 @@ const ProductModel = model('Product', new Schema({
     rating: { type: Number, default: 0 },
     tags: [{ type: String }],
     featured: { type: Boolean, default: false },
-    colors: [{ type: Object, color: String, stock: Number, image: String }],
+    colors: [{ type: Object, color: String, stock: Number, colorCode: String }],
     sizes: [{ type: Object, size: String, stock: Number, referenceColor: String }],
 
 }, { timestamps: true }))
