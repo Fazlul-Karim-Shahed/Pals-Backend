@@ -14,7 +14,7 @@ const { BrandModel } = require("../../Models/BrandModel")
 const getAllProduct = async (req, res) => {
 
     let searchParams = cleanObject(req.body)
-    
+
     if (searchParams.hasOwnProperty("max") || searchParams.hasOwnProperty("min")) {
         searchParams.sellingPrice = {};
     }
@@ -75,10 +75,18 @@ const getAllProduct = async (req, res) => {
         searchParams.sellingPrice.$lte = parseFloat(searchParams.max); // Set the maximum price
         delete searchParams.max;
     }
+    if (searchParams.hasOwnProperty("search")) {
+        searchParams.$text = { $search: searchParams.search }
+        delete searchParams.search
+    }
 
 
+    let products = await ProductModel.find({ verified: true, ...searchParams }) 
+        .populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId'])
+        .limit(req.query.limit)
 
-    let products = await ProductModel.find({ verified: true, ...searchParams }).populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId']).limit(req.query.limit)
+    // let products = await ProductModel.find({ $text: { $search: true } },
+    //     { score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore" } }).populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId']).limit(req.query.limit)
 
     if (products.length != 0) {
 
@@ -91,3 +99,4 @@ const getAllProduct = async (req, res) => {
 }
 
 module.exports.getAllProduct = getAllProduct
+

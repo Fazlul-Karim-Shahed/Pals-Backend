@@ -11,7 +11,7 @@ const ProductModel = model('Product', new Schema({
     subBrandId: { type: Schema.Types.ObjectId, ref: 'SubBrand' },
     verified: { type: Boolean, default: false, required: true },
 
-    name: { type: String, required: [true, "Category name is required"] },
+    name: { type: String, required: [true, "Category name is required"], index: 'text' },
     description: { type: String },
 
     image: [{ contentType: String, type: Object, name: String, required: true }],
