@@ -9,7 +9,7 @@ const { roleCheck } = require('../Middlewares/roleCheck')
 const router = require('express').Router()
 
 
-router.get('/', getAllOrders)
+router.post('/get', getAllOrders)
 router.post('/', roleCheck(['admin']), createOrder)
 router.put('/:orderId', roleCheck(['admin']), updateOrderStatus)
 router.delete('/:orderId', roleCheck(['admin']))
