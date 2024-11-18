@@ -46,7 +46,7 @@ const createOrder = async (req, res) => {
 
 
     let order = new OrderModel(cleanObject(req.body))
-    order.orderNo = new Date().getUTCDate() + '-' + new Date().getUTCMonth() + '-' + (await OrderModel.countDocuments() + 1)
+    order.orderNo = new Date().getUTCDate() + "" + (new Date().getUTCMonth() + 1) + "" + (await OrderModel.countDocuments() + 1)
 
 
     order.save()

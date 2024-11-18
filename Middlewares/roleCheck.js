@@ -27,7 +27,7 @@ const roleCheck = roleArray => {
                         next()
                     }
                     else {
-                        res.send({ message: 'You are not authorized', error: true })
+                        res.send({ message: 'Yoou are not authorized', error: true })
                     }
 
                 }

@@ -10,7 +10,7 @@ const router = require('express').Router()
 
 
 router.post('/get', getAllOrders)
-router.post('/', roleCheck(['admin']), createOrder)
+router.post('/', createOrder)
 router.put('/:orderId', roleCheck(['admin']), updateOrderStatus)
 router.delete('/:orderId', roleCheck(['admin']))
 

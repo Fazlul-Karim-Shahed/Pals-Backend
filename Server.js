@@ -16,6 +16,7 @@ const SubCategoryRouters = require("./Routers/SubCategoryRouters");
 const BatchRouters = require("./Routers/BatchRouters");
 const ProductRouters = require("./Routers/ProductRouters");
 const OrderRouters = require("./Routers/OrderRouters");
+const CourierRouters = require("./Routers/CourierRouters");
 
 // ------------ Configuration ------------  //
 
@@ -75,6 +76,7 @@ app.use('/api/sub-category', SubCategoryRouters)
 app.use('/api/batch', BatchRouters)
 app.use('/api/product', ProductRouters)
 app.use('/api/order', OrderRouters)
+app.use('/api/courier', CourierRouters)
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 

@@ -25,6 +25,8 @@ const OrderModel = model('Order', new Schema({
         total: { type: Number, required: true },
     }],
 
+    mainPrice: { type: Number, required: true },
+    discountedAmount: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
 
     discount: { type: Number },
@@ -34,7 +36,7 @@ const OrderModel = model('Order', new Schema({
 
     transactionId: { type: String },
 
-    deliveryMethod: { type: String, required: [true, "Delivery method is required"] },
+    deliveryMethod: { type: Schema.Types.ObjectId, ref: 'Courier' },
 
     orderStatus: { type: String, required: [true, "Order Status is required"], default: 'Pending', enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Pending Return', 'Returned', 'Cancelled'] },
 
