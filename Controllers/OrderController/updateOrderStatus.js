@@ -13,6 +13,8 @@ const { cleanObject } = require('../../Functions/cleanObject');
 
 const updateOrderStatus = async (req, res) => {
 
+    console.log(req.body)
+
     let order = await OrderModel.findById(req.params.orderId)
     let products = await ProductModel.find({ _id: { $in: order.orderList.map(item => item.productId) } })
 
@@ -21,6 +23,8 @@ const updateOrderStatus = async (req, res) => {
     }
 
     order.orderStatus = req.body.orderStatus;
+    order.deliveryMethod = req.body.deliveryMethod;
+
 
     if (order.orderStatus == 'Returned') {
         order.save().then(order => {

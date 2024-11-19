@@ -18,7 +18,7 @@ const getAllOrders = async (req, res) => {
 
     let order = await OrderModel.find(query)
         .sort({ orderDate: -1 })
-        .populate({ path: 'orderList.productId', model: 'Product' });
+        .populate({ path: 'orderList.productId', model: 'Product' }).populate(['deliveryMethod']);
 
     if (order.length !== 0) {
         res.status(200).send({ message: 'All orders within the specified date range', error: false, data: order });
