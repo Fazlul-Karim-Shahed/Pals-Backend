@@ -6,7 +6,7 @@ const SuperAdminModel = model('SuperAdmin', new Schema({
 
     firstName: { type: String, required: [true, "First name is required"] },
     lastName: { type: String },
-    email: { type: String, required: true },
+    email: { type: String },
     password: {
         type: String,
         max: 1024,
@@ -18,15 +18,15 @@ const SuperAdminModel = model('SuperAdmin', new Schema({
         default: 'superadmin',
         required: true,
     },
-    phone: { type: String, required: true },
-    nidNumber: { type: String, required: true },
+    mobile: { type: String, required: true },
+    nidNumber: { type: String, required: false },
     image: { contentType: String, type: Object, name: String },
-    nidFrontImage: { contentType: String, type: Object, name: String, required: true },
-    nidBackImage: { contentType: String, type: Object, name: String, required: true },
-    emailVerified: { type: Boolean, default: false }
+    nidFrontImage: { contentType: String, type: Object, name: String, required: false },
+    nidBackImage: { contentType: String, type: Object, name: String, required: false },
+    mobileVerified: { type: Boolean, default: false }
 
 
-    
+
 
 }, { timestamps: true }))
 

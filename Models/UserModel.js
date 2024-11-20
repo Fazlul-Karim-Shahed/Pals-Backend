@@ -8,7 +8,7 @@ const UserModel = model('User', new Schema({
 
     firstName: { type: String, required: [true, "First name is required"] },
     lastName: { type: String },
-    email: { type: String, required: true },
+    email: { type: String },
     password: {
         type: String,
         max: 1024,
@@ -20,11 +20,11 @@ const UserModel = model('User', new Schema({
         default: 'user',
         required: true,
     },
-    phone: { type: String, required: true },
+    mobile: { type: String, required: true },
     address: { type: String },
     zip: { type: String },
     image: { contentType: String, type: Object, name: String },
-    emailVerified: { type: Boolean, default: false }
+    mobileVerified: { type: Boolean, default: false }
 
 
 

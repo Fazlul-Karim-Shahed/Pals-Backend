@@ -1,6 +1,6 @@
 
 const jwt = require('jsonwebtoken')
-const { checkEmail } = require('../Functions/checkEmail')
+const { checkMobile } = require('../Functions/checkMobile')
 
 const roleCheck = roleArray => {
 
@@ -11,7 +11,7 @@ const roleCheck = roleArray => {
             const data = await jwt.verify(req.headers.authorization.split(" ")[1], process.env.SECRET_KEY)
 
             if (data) {
-                const user = await checkEmail(data.email)
+                const user = await checkMobile(data.mobile)
 
                 if (user) {
                     let match = false

@@ -2,7 +2,7 @@
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const { checkEmail } = require('../../Functions/checkEmail');
+const { checkMobile } = require('../../Functions/checkMobile');
 const { AdminModel } = require('../../Models/AdminModel');
 const { SuperAdminModel } = require('../../Models/SuperAdminModel');
 const { EmployeeModel } = require('../../Models/EmployeeModel');
@@ -12,7 +12,7 @@ const { cleanObject } = require('../../Functions/cleanObject');
 
 const signup = async (req, res) => {
 
-    let data = await checkEmail(req.body.email)
+    let data = await checkMobile(req.body.mobile)
 
     if (data) {
         res.send({ message: 'User already exist', error: true })
@@ -30,7 +30,7 @@ const signup = async (req, res) => {
 
         data = data.save().then(data => {
 
-            const token = jwt.sign(_.pick(data, ['firstName', 'lastName', 'role', 'email', '_id', 'phone', 'emailVerified']), process.env.SECRET_KEY, { expiresIn: '1h' })
+            const token = jwt.sign(_.pick(data, ['firstName', 'lastName', 'role', 'email', '_id', 'mobile', 'mobileVerified']), process.env.SECRET_KEY, { expiresIn: '1h' })
             res.send({
                 message: 'Registration complete', error: false, value: {
                     token: token
@@ -46,12 +46,3 @@ const signup = async (req, res) => {
 }
 
 module.exports.signup = signup
-
-
-
-
-// req.body.role === 'admin' ? _.pick(req.body, ['username', 'email', 'password', 'role', 'phone', 'nidNumber', 'image', 'nidFrontImage', 'nidBackImage']) :
-
-//     req.body.role === 'superAdmin' ? _.pick(req.body, ['username', 'email', 'password', 'role', 'phone', 'nidNumber', 'image', 'nidFrontImage', 'nidBackImage']) :
-
-//         req.body.role === 'employee' ? _.pick(req.body, ['username', 'email', 'password', 'role', 'phone', 'address', 'dob', 'zip', 'image', 'nidFrontImage', 'nidBackImage', 'department', 'position', 'salary']) : _.pick(req.body, ['username', 'email', 'password', 'role', 'phone', 'address', 'dob', 'zip', 'image'])
