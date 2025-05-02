@@ -1,10 +1,12 @@
 
 const { SubBrandModel } = require("../../Models/SubBrandModel")
+const { ProductModel } = require("../../Models/ProductModel")
 
 
 const deleteSubBrand = async (req, res) => {
 
     let subBrand = await SubBrandModel.deleteOne({ _id: req.params.subBrandId })
+    let product = await ProductModel.deleteMany({ subBrandId: req.params.subBrandId })
 
     if (subBrand.deletedCount != 0) {
 

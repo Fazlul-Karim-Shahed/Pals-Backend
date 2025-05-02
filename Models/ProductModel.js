@@ -1,4 +1,5 @@
 
+const { findLastKey } = require('lodash')
 const { model, Schema } = require('mongoose')
 
 const ProductModel = model('Product', new Schema({
@@ -8,7 +9,7 @@ const ProductModel = model('Product', new Schema({
     categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: [true, "Category is required"] },
     subCategoryId: { type: Schema.Types.ObjectId, ref: 'SubCategory', required: [true, "Sub Category is required"] },
     brandId: { type: Schema.Types.ObjectId, ref: 'Brand', required: [true, "Brand is required"] },
-    subBrandId: { type: Schema.Types.ObjectId, ref: 'SubBrand' },
+    subBrandId: { type: Schema.Types.ObjectId, ref: 'SubBrand', default: null },
     verified: { type: Boolean, default: false, required: true },
 
     name: { type: String, required: [true, "Category name is required"], index: 'text' },

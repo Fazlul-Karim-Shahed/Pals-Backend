@@ -11,6 +11,7 @@ const { formDataToObj } = require('../../Functions/formDataToObj');
 const { cleanObject } = require('../../Functions/cleanObject');
 const { saveMultipleFile } = require('../../Functions/saveMultipleFile');
 const { saveAndGetFile } = require('../../Functions/saveAndGetFile');
+const { default: mongoose } = require('mongoose');
 
 
 const createProduct = async (req, res) => {
@@ -28,8 +29,15 @@ const createProduct = async (req, res) => {
 
         fields = cleanObject(formDataToObj(fields));
 
+        const idFields = ['subBrandId', 'brandId', 'departmentId', 'categoryId', 'subCategoryId', 'batchId'];
+        idFields.forEach(field => {
+            if (fields[field] && !mongoose.Types.ObjectId.isValid(fields[field])) {
+                delete fields[field];  // or set to null if nullable
+            }
+        });
 
         let product = new ProductModel(fields);
+        product.subBrandId = fields.subBrandId ? mongoose.Types.ObjectId(fields.subBrandId) : null;
 
 
 
@@ -39,12 +47,13 @@ const createProduct = async (req, res) => {
         if (imageList) {
 
             imageList.then(data => {
-                
+
                 product.save()
                     .then(product => {
                         res.send({ message: 'product created successfully', error: false, data: product });
                     })
                     .catch(err => {
+                        console.log(err);
                         res.send({ message: err.message, error: true });
                     });
 

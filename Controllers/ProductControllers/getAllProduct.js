@@ -9,6 +9,7 @@ const { CategoryModel } = require("../../Models/CategoryModel")
 const { SubCategoryModel } = require("../../Models/SubCategoryModel")
 const { SubBrandModel } = require("../../Models/SubBrandModel")
 const { BrandModel } = require("../../Models/BrandModel")
+const { roleCheck } = require("../../Middlewares/roleCheck")
 
 
 const getAllProduct = async (req, res) => {
@@ -81,7 +82,8 @@ const getAllProduct = async (req, res) => {
     }
 
 
-    let products = await ProductModel.find({ verified: true, ...searchParams }) 
+    let products = await ProductModel.find({ verified: true, ...searchParams })
+        .sort({ stock: -1 })
         .populate(['batchId', 'departmentId', 'categoryId', 'subCategoryId', 'brandId', 'subBrandId'])
         .limit(req.query.limit)
 

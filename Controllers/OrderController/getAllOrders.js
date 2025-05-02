@@ -19,7 +19,8 @@ const getAllOrders = async (req, res) => {
 
     console.log(query);
 
-    let order = await OrderModel.find(query)
+
+    let order = await OrderModel.find(query.orderDate ? { orderDate: query.orderDate } : {})
         .sort({ orderDate: -1 })
         .populate({ path: 'orderList.productId', model: 'Product' }).populate(['deliveryMethod']);
 

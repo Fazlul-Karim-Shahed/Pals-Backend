@@ -13,8 +13,6 @@ const { cleanObject } = require('../../Functions/cleanObject');
 
 const updateOrderStatus = async (req, res) => {
 
-    console.log(req.body)
-
     let order = await OrderModel.findById(req.params.orderId)
     let products = await ProductModel.find({ _id: { $in: order.orderList.map(item => item.productId) } })
 
@@ -62,7 +60,6 @@ const updateOrderStatus = async (req, res) => {
         order.save().then(order => {
             res.status(200).json({ message: `Order ${order.orderStatus} successfully`, order })
         }).catch(err => {
-            console.log(err)
             res.status(400).json({ message: `Failed to ${order.orderStatus} order`, error: err })
         })
     }

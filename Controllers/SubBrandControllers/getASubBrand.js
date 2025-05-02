@@ -7,7 +7,7 @@ const getASubBrand = async (req, res) => {
 
     let subBrand = await SubBrandModel.findOne({ _id: req.params.subBrandId }).populate(['departmentId', 'categoryId'])
 
-    if (brand) {
+    if (subBrand) {
 
         res.status(200).send({ message: 'Sub Brand found', error: false, data: subBrand })
     }
