@@ -97,9 +97,7 @@ const port = 4444
 
 cron.schedule('*/14 * * * *', async () => {
   try {
-    console.log('Running cron job to hit server at /ping');
     const response = await axios.get('https://pals-backend.onrender.com');
-    console.log('Response:');
   } catch (error) {
     console.error('Error hitting server:', error.message);
   }
