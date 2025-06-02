@@ -18,6 +18,8 @@ const ProductRouters = require("./Routers/ProductRouters");
 const OrderRouters = require("./Routers/OrderRouters");
 const CourierRouters = require("./Routers/CourierRouters");
 const ProfileRouters = require("./Routers/ProfileRouters");
+const cron = require('node-cron');
+const axios = require('axios');
 
 // ------------ Configuration ------------  //
 
@@ -92,6 +94,17 @@ app.use((err, req, res, next) => {
 // ------------ Server ------------ //
 
 const port = 4444
+
+cron.schedule('*/14 * * * *', async () => {
+  try {
+    console.log('Running cron job to hit server at /ping');
+    const response = await axios.get('https://pals-backend.onrender.com');
+    console.log('Response:');
+  } catch (error) {
+    console.error('Error hitting server:', error.message);
+  }
+});
+
 app.listen(port, () => {
   console.log('Server is running on port ' + port);
 })
