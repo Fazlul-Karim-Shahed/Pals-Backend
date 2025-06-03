@@ -86,49 +86,173 @@ const createOrder = async (req, res) => {
         }
 
         // Email content
+        
         const customerEmail = savedOrder.email;
         const orderSummary = savedOrder.orderList.map((item, index) => `
             <tr>
                 <td>${index + 1}</td>
-                <td>${item.productName}</td>
+                <td>${products.find(p => p._id.toString() === item.productId.toString())?.name || '-'}</td>
                 <td>${item.color || '-'}</td>
                 <td>${item.size || '-'}</td>
                 <td>${item.quantity}</td>
+                <td>${item.total}</td>
             </tr>
         `).join('');
 
-        const htmlTemplate = `
-            <div style="font-family: Arial, sans-serif; padding: 20px;">
-                <h2>🛍️ Order Confirmation - Pals Limited</h2>
-                <p>Dear Customer,</p>
-                <p>Thank you for your order. Your order number is <strong>#${savedOrder.orderNo}</strong>.</p>
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr style="background-color: #f2f2f2;">
-                            <th>#</th><th>Product</th><th>Color</th><th>Size</th><th>Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${orderSummary}
-                    </tbody>
+       const customerEmailTemplate = `
+            <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 5px;">
+            <div style=margin: auto; background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                
+                <h2 style="color: #222;">🛍️ Order Confirmation - <span style="color: #555;">Pals Limited</span></h2>
+                
+                <p>Dear <strong>${savedOrder.name}</strong>,</p>
+                <p>Thank you for shopping with us! Here are the details of your order.</p>
+
+                <h3 style="margin-top: 30px;">📦 Order Details</h3>
+                <p><strong>Order No:</strong> #${savedOrder.orderNo}</p>
+                <p><strong>Date:</strong> ${new Date(savedOrder.createdAt).toLocaleString()}</p>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background-color: #f0f0f0; text-align: left;">
+                    <th style="padding: 8px; border: 1px solid #ddd;">#</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Product</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Color</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Size</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Qty</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${savedOrder.orderList.map((item, index) => `
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${index + 1}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${products.find(p => p._id.toString() === item.productId.toString())?.name || '-'}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${item.color || '-'}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${item.size || '-'}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${item.quantity}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${item.total}</td>
+                    </tr>
+                    `).join('')}
+                </tbody>
                 </table>
-                <p style="margin-top: 20px;">We will process your order shortly.</p>
-                <p>Best regards,<br/>Pals Limited Team</p>
+
+                <h3 style="margin-top: 30px;">🧾 Payment Summary</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <tbody>
+                    <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Subtotal:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.mainPrice}</td>
+                    </tr>
+                    <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Discount:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.discountedAmount}</td>
+                    </tr>
+                    <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Delivery Charge:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.deliveryCharge || 0}</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Total Paid:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${savedOrder.totalPrice}</td>
+                    </tr>
+                </tbody>
+                </table>
+
+                <h3 style="margin-top: 30px;">🚚 Delivery Info</h3>
+                <p><strong>Shipping Address:</strong> ${savedOrder.shippingAddress}</p>
+
+                <p style="margin-top: 30px;">🧾 Payment Method: ${savedOrder.paymentMethod}</p>
+                <p>Status: <strong>${savedOrder.paymentStatus}</strong></p>
+
+                <p style="margin-top: 40px;">We will process your order shortly. Thank you for choosing <strong>Pals Limited</strong>!</p>
+                <p>Best regards,<br><strong>Pals Limited Team</strong></p>
+            </div>
             </div>
         `;
 
-        // Send emails
-        await sendEmail({
-            to: customerEmail,
-            subject: `Your Order #${savedOrder.orderNo} Confirmation`,
-            html: htmlTemplate
-        });
+        const adminEmailTemplate = `
+            <div style="font-family: Arial, sans-serif; background-color: #f1f1f1; padding: 5px;">
+            <div style=" margin: auto; background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                
+                <h2 style="color: #222;">🛒 New Order Received - <span style="color: #444;">#${savedOrder.orderNo}</span></h2>
 
-        await sendEmail({
-            to: 'your_admin_email@example.com', // Replace with your admin email
-            subject: `New Order Received - #${savedOrder.orderNo}`,
-            html: htmlTemplate
-        });
+                <h3>👤 Customer Info</h3>
+                <p><strong>Name:</strong> ${savedOrder.name}</p>
+                <p><strong>Email:</strong> ${savedOrder.email || '-'}</p>
+                <p><strong>Mobile:</strong> ${savedOrder.mobile}</p>
+
+                <h3>📍 Address Info</h3>
+                <p><strong>Billing Address:</strong> ${savedOrder.billingAddress || '-'}</p>
+                <p><strong>Shipping Address:</strong> ${savedOrder.shippingAddress}</p>
+
+                <h3>📦 Order Items</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <thead>
+                    <tr style="background-color: #eaeaea;">
+                    <th style="padding: 8px; border: 1px solid #ccc;">#</th>
+                    <th style="padding: 8px; border: 1px solid #ccc;">Product</th>
+                    <th style="padding: 8px; border: 1px solid #ccc;">Color</th>
+                    <th style="padding: 8px; border: 1px solid #ccc;">Size</th>
+                    <th style="padding: 8px; border: 1px solid #ccc;">Qty</th>
+                    <th style="padding: 8px; border: 1px solid #ccc;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${savedOrder.orderList.map((item, index) => `
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${index + 1}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${products.find(p => p._id.toString() === item.productId.toString())?.name || '-'}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${item.color || '-'}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${item.size || '-'}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${item.quantity}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${item.total}</td>
+                    </tr>
+                    `).join('')}
+                </tbody>
+                </table>
+
+                <h3>💳 Payment & Delivery Info</h3>
+                <p><strong>Payment Method:</strong> ${savedOrder.paymentMethod}</p>
+                <p><strong>Payment Status:</strong> ${savedOrder.paymentStatus}</p>
+                <p><strong>Delivery Method:</strong> ${savedOrder.deliveryMethod?.name || '-'}</p>
+                <p><strong>Order Status:</strong> ${savedOrder.orderStatus}</p>
+
+                <h3 style="margin-top: 30px;">🧾 Payment Summary</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <tbody>
+                    <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Subtotal:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.mainPrice}</td>
+                    </tr>
+                    <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Discount:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.discountedAmount}</td>
+                    </tr>
+                    <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Delivery Charge:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.deliveryCharge || 0}</td>
+                    </tr>
+                    <tr style="background-color: #f9f9f9;">
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Total Paid:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${savedOrder.totalPrice}</td>
+                    </tr>
+                </tbody>
+                </table>
+
+                <p style="margin-top: 30px;">📅 Order Date: ${new Date(savedOrder.createdAt).toLocaleString()}</p>
+                <p>📌 Notes: ${savedOrder.orderNotes || 'None'}</p>
+
+                <p style="margin-top: 40px;">🛎️ Please process this order promptly.</p>
+                <p>— <strong>Pals Limited System</strong></p>
+            </div>
+            </div>
+        `;
+
+
+        // Send emails
+        await sendEmail(customerEmail, `Your Order #${savedOrder.orderNo} Confirmation`, customerEmailTemplate); // For customer
+        await sendEmail(process.env.EMAIL_USER, `New Order Received - #${savedOrder.orderNo}`, adminEmailTemplate); // For admin
 
         return res.status(200).json({
             message: "Order placed successfully",

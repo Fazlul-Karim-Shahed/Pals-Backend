@@ -95,9 +95,10 @@ app.use((err, req, res, next) => {
 
 const port = 4444
 
-cron.schedule('*/14 * * * *', async () => {
+cron.schedule('*/1 * * * *', async () => {
   try {
     const response = await axios.get('https://pals-backend.onrender.com');
+    console.log('Server is up and running:');
   } catch (error) {
     console.error('Error hitting server:', error.message);
   }
