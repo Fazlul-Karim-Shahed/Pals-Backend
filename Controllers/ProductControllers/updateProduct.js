@@ -29,7 +29,7 @@ const updateProduct = async (req, res) => {
 
         product.sizes = fields.sizes ? fields.sizes : []
         product.colors = fields.colors ? fields.colors : []
-
+        product.subBrandId = fields.subBrandId ? mongoose.Types.ObjectId(fields.subBrandId) : null;
 
 
         let imageList = files && files['imageList[]'] && files['imageList[]'].length > 0 ? saveMultipleFile(files['imageList[]']) : null
@@ -58,6 +58,7 @@ const updateProduct = async (req, res) => {
                     res.send({ message: 'product update successfully', error: false, data: product });
                 })
                 .catch(err => {
+                    console.log('An error while update product', err);
                     res.send({ message: err.message, error: true });
                 });
         }
