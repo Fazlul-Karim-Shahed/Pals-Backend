@@ -1,66 +1,75 @@
-
-
-
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 const { OrderModel } = require("../../Models/OrderModel");
 const { ProductModel } = require("../../Models/ProductModel");
-const formidable = require('formidable');
-const { formDataToObj } = require('../../Functions/formDataToObj');
-const { saveAndGetFile } = require('../../Functions/saveAndGetFile');
-const { cleanObject } = require('../../Functions/cleanObject');
-
+const formidable = require("formidable");
+const { formDataToObj } = require("../../Functions/formDataToObj");
+const { saveAndGetFile } = require("../../Functions/saveAndGetFile");
+const { cleanObject } = require("../../Functions/cleanObject");
 
 const deleteOrder = async (req, res) => {
-
-
-    let order = await OrderModel.findById(req.params.orderId)
-    let products = await ProductModel.find({ _id: { $in: order.orderList.map(item => item.productId) } })
-
-    if (!order) {
-        res.status(400).json({ message: "Order not found", error: true })
-    }
-
-    for (let product in products) {
-        product = products[product]
-        let orderItem = order.orderList.find(item => item.productId == product._id)
-
-        product.stock = product.stock + Number(orderItem.quantity)
-        if (product.colors.length > 0) {
-            product.colors = product.colors.map(c => {
-                if (c.color == orderItem.color) {
-                    c.stock = c.stock + Number(orderItem.quantity)
-                }
-                return c
-            })
+    try {
+        const order = await OrderModel.findById(req.params.orderId);
+        if (!order) {
+            return res.status(400).json({ message: "Order not found", error: true });
         }
 
-        if (product.sizes.length > 0) {
-            product.sizes = product.sizes.map(s => {
-                if ((s.size == orderItem.size) && (s.referenceColor == '' || s.referenceColor == 0 || s.referenceColor == null) ? true : (s.referenceColor === orderItem.color)) {
-                    s.stock = s.stock + Number(orderItem.quantity)
-                }
-                return s
-            })
+        const products = await ProductModel.find({
+            _id: { $in: order.orderList.map((item) => item.productId) },
+        });
+
+        for (const product of products) {
+            const orderItem = order.orderList.find((item) => item.productId.toString() === product._id.toString());
+
+            if (!orderItem) continue;
+
+            const quantity = Number(orderItem.quantity);
+            product.stock += quantity;
+
+            // Update color-wise stock
+            let colorModified = false;
+            if (Array.isArray(product.colors)) {
+                product.colors = product.colors.map((c) => {
+                    if (c.color === orderItem.color) {
+                        c.stock = (c.stock || 0) + quantity;
+                        colorModified = true;
+                    }
+                    return c;
+                });
+                if (colorModified) product.markModified("colors");
+            }
+
+            // Update size-wise stock
+            let sizeModified = false;
+            if (Array.isArray(product.sizes)) {
+                product.sizes = product.sizes.map((s) => {
+                    const matchColor = !s.referenceColor || s.referenceColor === "" || s.referenceColor === "0" || s.referenceColor === orderItem.color;
+                    if (s.size === orderItem.size && matchColor) {
+                        s.stock = (s.stock || 0) + quantity;
+                        sizeModified = true;
+                    }
+                    return s;
+                });
+                if (sizeModified) product.markModified("sizes");
+            }
+
+            await product.save();
         }
 
-        ProductModel.findByIdAndUpdate(product._id, product).then(product => { }).catch(err => { res.status(400).json({ message: `Failed to update product ${product.name}`, error: err }) })
+        await OrderModel.findByIdAndDelete(req.params.orderId);
+
+        return res.status(200).json({
+            message: "Order deleted and stock restored successfully",
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "An error occurred while deleting order",
+            error: err,
+        });
     }
-
-    OrderModel.findByIdAndDelete(req.params.orderId).then(order => {
-        res.status(200).json({ message: "Order deleted successfully", order })
-    }).catch(err => {
-        res.status(400).json({ message: "Failed to delete order", error: err })
-    })
-
-    // order.save().then(order => {
-
-    //     res.status(200).json({ message: "Order cancelled successfully", order })
-    // }).catch(err => {
-    //     res.status(400).json({ message: "Failed to cancel order", error: err })
-    // })
+};
 
 
-}
 
-module.exports.deleteOrder = deleteOrder
+module.exports.deleteOrder = deleteOrder;

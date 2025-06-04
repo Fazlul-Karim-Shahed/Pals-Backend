@@ -26,7 +26,7 @@ const createExpense = async (req, res) => {
         let expense = new ExpenseModel(fields)
 
 
-        let documents = files['documents[]'].length > 0 ? saveMultipleFile(files['documents[]']) : null
+        let documents = files && files['documents[]'] && files['documents[]'].length > 0 ? saveMultipleFile(files['documents[]']) : null
 
         if (documents) {
 
