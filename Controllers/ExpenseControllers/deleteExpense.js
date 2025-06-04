@@ -3,6 +3,8 @@ const { ExpenseModel } = require("../../Models/ExpenseModel");
 const deleteExpense = async (req, res) => {
     const { id } = req.params;
 
+    console.log("Deleting expense with ID:", req);
+
     if (!id) {
         return res.status(400).send({ message: "Expense ID is required", error: true });
     }
