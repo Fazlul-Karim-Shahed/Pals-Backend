@@ -18,6 +18,7 @@ const ProductRouters = require("./Routers/ProductRouters");
 const OrderRouters = require("./Routers/OrderRouters");
 const CourierRouters = require("./Routers/CourierRouters");
 const ProfileRouters = require("./Routers/ProfileRouters");
+const ExpenseRouters = require("./Routers/ExpenseRouters");
 const cron = require('node-cron');
 const axios = require('axios');
 
@@ -81,6 +82,7 @@ app.use('/api/product', ProductRouters)
 app.use('/api/order', OrderRouters)
 app.use('/api/courier', CourierRouters)
 app.use('/api/profile', ProfileRouters)
+app.use('/api/expense', ExpenseRouters)
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 
