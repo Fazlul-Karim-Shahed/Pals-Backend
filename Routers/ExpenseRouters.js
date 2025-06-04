@@ -1,15 +1,12 @@
+const { createExpense } = require("../Controllers/ExpenseControllers/createExpense");
+const { deleteExpense } = require("../Controllers/ExpenseControllers/deleteExpense");
+const { getAllExpense } = require("../Controllers/ExpenseControllers/getAllExpense");
+const { roleCheck } = require("../Middlewares/roleCheck");
 
+const router = require("express").Router();
 
-const { createExpense } = require('../Controllers/ExpenseControllers/createExpense')
-const { getAllExpense } = require('../Controllers/ExpenseControllers/getAllExpense')
-const { roleCheck } = require('../Middlewares/roleCheck')
+router.get("/", getAllExpense);
+router.post("/", roleCheck(["admin"]), createExpense);
+router.delete("/:id", roleCheck(["admin"]), deleteExpense);
 
-
-const router = require('express').Router()
-
-
-router.get('/', getAllExpense)
-router.post('/', roleCheck(['admin']), createExpense)
-
-
-module.exports = router
+module.exports = router;
