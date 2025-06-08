@@ -112,7 +112,7 @@ const createOrder = async (req, res) => {
 
                 <h3 style="margin-top: 30px;">📦 Order Details</h3>
                 <p><strong>Order No:</strong> #${savedOrder.orderNo}</p>
-                <p><strong>Date:</strong> ${new Date(savedOrder.createdAt).toLocaleString()}</p>
+                <p><strong>Date:</strong> ${new Date(savedOrder.createdAt).toLocaleString("en-US", { timeZone: "Asia/Dhaka" })}</p>
 
                 <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
                 <thead>
@@ -250,7 +250,7 @@ const createOrder = async (req, res) => {
                 </tbody>
                 </table>
 
-                <p style="margin-top: 30px;">📅 Order Date: ${new Date(savedOrder.createdAt).toLocaleString()}</p>
+                <p style="margin-top: 30px;">📅 Order Date: ${new Date(savedOrder.createdAt).toLocaleString("en-US", { timeZone: "Asia/Dhaka" })}</p>
                 <p>📌 Notes: ${savedOrder.orderNotes || "None"}</p>
 
                 <p style="margin-top: 40px;">🛎️ Please process this order promptly.</p>
