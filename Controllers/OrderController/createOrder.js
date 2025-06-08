@@ -160,7 +160,9 @@ const createOrder = async (req, res) => {
                     </tr>
                     <tr style="background-color: #f9f9f9;">
                     <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Total Paid:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${savedOrder.totalPrice}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${
+                        savedOrder.totalPrice + (savedOrder.deliveryCharge || 0) - (savedOrder.totalPrice + ((savedOrder.deliveryCharge || 0) * savedOrder.discountedAmount) / 100)
+                    }</td>
                     </tr>
                 </tbody>
                 </table>
@@ -245,7 +247,9 @@ const createOrder = async (req, res) => {
                     </tr>
                     <tr style="background-color: #f9f9f9;">
                     <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Total Paid:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${savedOrder.totalPrice}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${
+                        savedOrder.totalPrice + (savedOrder.deliveryCharge || 0) - (savedOrder.totalPrice + ((savedOrder.deliveryCharge || 0) * savedOrder.discountedAmount) / 100)
+                    }</td>
                     </tr>
                 </tbody>
                 </table>
