@@ -1,14 +1,14 @@
-require('dotenv').config();
-const nodemailer = require('nodemailer');
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: "smtp.gmail.com",
     port: 465,
     secure: true, // 465 requires secure: true
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+        pass: process.env.EMAIL_PASS,
+    },
 });
 
 async function sendEmail(to, sub, msg) {
@@ -17,10 +17,10 @@ async function sendEmail(to, sub, msg) {
             from: `"Pals Limited" <${process.env.EMAIL_USER}>`,
             to,
             subject: sub,
-            html: msg
+            html: msg,
         });
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error("Error sending email:", error);
     }
 }
 

@@ -65,12 +65,12 @@ const deleteOrder = async (req, res) => {
             
             <h2 style="color: #222;">🛍️ Order Cancellation</h2>
             
-            <p>Dear <strong>${savedOrder.name}</strong>,</p>
+            <p>Dear <strong>${order.name}</strong>,</p>
             <p>We regret to inform you that your order has been cancelled  </p>
 
             <h3 style="margin-top: 30px;">📦 Order Details</h3>
-            <p><strong>Order No:</strong> #${savedOrder.orderNo}</p>
-            <p><strong>Date:</strong> ${new Date(savedOrder.createdAt).toLocaleString("en-US", { timeZone: "Asia/Dhaka" })}</p>
+            <p><strong>Order No:</strong> #${order.orderNo}</p>
+            <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleString("en-US", { timeZone: "Asia/Dhaka" })}</p>
 
             <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <thead>
@@ -84,7 +84,7 @@ const deleteOrder = async (req, res) => {
                 </tr>
             </thead>
             <tbody>
-                ${savedOrder.orderList
+                ${order.orderList
                     .map(
                         (item, index) => `
                 <tr>

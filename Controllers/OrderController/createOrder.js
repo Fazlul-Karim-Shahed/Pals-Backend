@@ -147,22 +147,20 @@ const createOrder = async (req, res) => {
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                 <tbody>
                     <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Subtotal:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.mainPrice}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Main Price:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.mainPrice} BDT</td>
                     </tr>
                     <tr>
                     <td style="padding: 8px; border: 1px solid #ddd;"><strong>Discount:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.discountedAmount}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.discountedAmount} BDT</td>
                     </tr>
                     <tr>
                     <td style="padding: 8px; border: 1px solid #ddd;"><strong>Delivery Charge:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.deliveryCharge || 0}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.deliveryCharge || 0} BDT</td>
                     </tr>
                     <tr style="background-color: #f9f9f9;">
-                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Total Paid:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${
-                        savedOrder.totalPrice + (savedOrder.deliveryCharge || 0) - (savedOrder.totalPrice + ((savedOrder.deliveryCharge || 0) * savedOrder.discountedAmount) / 100)
-                    }</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Subtotal:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${savedOrder.totalPrice + (savedOrder.deliveryCharge || 0)} BDT</td>
                     </tr>
                 </tbody>
                 </table>
@@ -216,7 +214,7 @@ const createOrder = async (req, res) => {
                         <td style="padding: 8px; border: 1px solid #ccc;">${item.color || "-"}</td>
                         <td style="padding: 8px; border: 1px solid #ccc;">${item.size || "-"}</td>
                         <td style="padding: 8px; border: 1px solid #ccc;">${item.quantity}</td>
-                        <td style="padding: 8px; border: 1px solid #ccc;">${item.total}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${item.total} Tk</td>
                     </tr>
                     `
                         )
@@ -234,22 +232,20 @@ const createOrder = async (req, res) => {
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                 <tbody>
                     <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Subtotal:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.mainPrice}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Main Price:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.mainPrice} Tk</td>
                     </tr>
                     <tr>
                     <td style="padding: 8px; border: 1px solid #ddd;"><strong>Discount:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.discountedAmount}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.discountedAmount} Tk</td>
                     </tr>
                     <tr>
                     <td style="padding: 8px; border: 1px solid #ddd;"><strong>Delivery Charge:</strong></td>
                     <td style="padding: 8px; border: 1px solid #ddd;">${savedOrder.deliveryCharge || 0}</td>
                     </tr>
                     <tr style="background-color: #f9f9f9;">
-                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Total Paid:</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${
-                        savedOrder.totalPrice + (savedOrder.deliveryCharge || 0) - (savedOrder.totalPrice + ((savedOrder.deliveryCharge || 0) * savedOrder.discountedAmount) / 100)
-                    }</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;"><strong>Subtotal:</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">${savedOrder.totalPrice + (savedOrder.deliveryCharge || 0)} Tk</td>
                     </tr>
                 </tbody>
                 </table>
