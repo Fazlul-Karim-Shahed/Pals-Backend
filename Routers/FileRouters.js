@@ -1,9 +1,9 @@
-const { deleteFile } = require("d:/Skills/Web Development/KONCEPT_TECH/QOC_Learning/Controllers/FileController/deleteFile");
-const { getAllFiles } = require("d:/Skills/Web Development/KONCEPT_TECH/QOC_Learning/Controllers/FileController/getAllFiles");
+const { deleteFile } = require("../Controllers/FileControllers/deleteFile");
+const { getAllFiles } = require("../Controllers/FileControllers/getAllFiles");
 
 const router = require("express").Router();
 
 router.delete("/:filename", deleteFile);
-router.get("/", getAllFiles)
+router.get("/", getAllFiles);
 
 module.exports = router;
