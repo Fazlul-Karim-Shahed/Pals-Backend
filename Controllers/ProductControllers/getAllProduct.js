@@ -81,6 +81,7 @@ const getAllProduct = async (req, res) => {
         delete searchParams.search
     }
 
+    console.log(searchParams);
 
     let products = await ProductModel.find({ verified: true, ...searchParams })
         .sort({ stock: -1 })
