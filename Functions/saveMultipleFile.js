@@ -67,6 +67,7 @@ const saveMultipleFile = async (files) => {
                             contentType: file.mimetype,
                         });
                     }
+                    
 
                     console.log("Compressed size:", (compressedBuffer.length / 1024).toFixed(2), "KB");
                     await fs.writeFile(newPath, compressedBuffer);
