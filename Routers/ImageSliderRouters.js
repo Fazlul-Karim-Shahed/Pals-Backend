@@ -7,6 +7,6 @@ const router = require("express").Router();
 
 router.get("/", getAllImageSlider);
 router.post("/", roleCheck(["admin"]), createImageSlider);
-router.delete("/:imageSliderId", roleCheck(["admin"]), deleteImageSlider)
+router.delete("/:imageSliderId", roleCheck(["admin"]), deleteImageSlider);
 
 module.exports = router;
