@@ -16,7 +16,6 @@ const saveMultipleFile = async (files) => {
                     const convertedFileName = baseName + ".webp";
                     const newPath = path.join(process.cwd(), "uploads", convertedFileName);
 
-                    
                     // Read the original file
                     const inputBuffer = await fs.readFile(oldPath);
 
