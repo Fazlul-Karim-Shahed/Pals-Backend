@@ -10,6 +10,7 @@ const { saveAndGetFile } = require("../../Functions/saveAndGetFile");
 const updateProduct = async (req, res) => {
     const form = new formidable.IncomingForm();
     form.keepExtensions = true;
+    let imageStatus = "";
 
     let product = await ProductModel.findOne({ _id: req.params.productId });
 
@@ -17,6 +18,8 @@ const updateProduct = async (req, res) => {
         if (err) {
             return res.status(500).send(err);
         }
+
+        imageStatus = fields.image && fields.image[0] === "none" ? fields.image[0] : "";
 
         fields = cleanObject(formDataToObj(fields));
 
@@ -27,6 +30,11 @@ const updateProduct = async (req, res) => {
         product.subBrandId = fields.subBrandId ? mongoose.Types.ObjectId(fields.subBrandId) : null;
 
         let imageList = files && files["imageList[]"] && files["imageList[]"].length > 0 ? saveMultipleFile(files["imageList[]"]) : null;
+        console.log("Image Status", imageStatus);
+
+        if (imageStatus === "none") {
+            product.image = [];
+        }
 
         if (imageList) {
             imageList
