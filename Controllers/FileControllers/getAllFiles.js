@@ -4,9 +4,7 @@ const path = require("path");
 const getAllFiles = async (req, res) => {
     try {
         const uploadsDir = path.join(process.cwd(), "uploads");
-        const files = await fs.promises.readdir(uploadsDir); // ✅ this waits properly
-
-        console.log("Files in uploads directory:", files);
+        const files = await fs.promises.readdir(uploadsDir); // ✅ this waits properl
 
         res.send({ message: "All files in database", error: false, data: files });
     } catch (err) {

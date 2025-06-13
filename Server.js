@@ -60,7 +60,6 @@ mongoose
 // ------------ All Routers ------------ //
 
 app.use("/api/uploads/:name", (req, res) => {
-    console.log(path.resolve("./uploads/" + req.params.name));
     res.sendFile(path.resolve("./uploads/" + req.params.name));
 });
 
