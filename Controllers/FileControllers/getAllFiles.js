@@ -29,10 +29,15 @@ const getAllFiles = async (req, res) => {
     try {
         const files = await fetchAllCloudinaryFiles("uploads");
 
-        const formattedFiles = files.map((file) => ({
-            ...file,
-            name: `${file.public_id.split("/").pop()}.${file.format}`,
-        }));
+        const formattedFiles = files.map((file) => {
+
+            // console.log(file)
+
+            return {
+                ...file,
+                name: `${file.display_name}.${file.format}`,
+            };
+        });
 
         res.send({ message: "All files in database", error: false, data: formattedFiles });
     } catch (err) {
