@@ -11,7 +11,6 @@ const uploadFiles = async (req, res) => {
 
     form.parse(req, (err, fields, files) => {
         if (err) {
-            console.error("Formidable error:", err);
             return res.status(500).json({ error: true, message: "Upload failed." });
         }
 

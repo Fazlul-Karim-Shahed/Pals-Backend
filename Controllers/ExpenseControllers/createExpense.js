@@ -1,20 +1,15 @@
-
-
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 const { ExpenseModel } = require("../../Models/ExpenseModel");
-const formidable = require('formidable');
-const { formDataToObj } = require('../../Functions/formDataToObj');
-const { saveAndGetFile } = require('../../Functions/saveAndGetFile');
-const { cleanObject } = require('../../Functions/cleanObject');
-const { saveMultipleFile } = require('../../Functions/saveMultipleFile');
-
+const formidable = require("formidable");
+const { formDataToObj } = require("../../Functions/formDataToObj");
+const { saveAndGetFile } = require("../../Functions/saveAndGetFile");
+const { cleanObject } = require("../../Functions/cleanObject");
+const { saveMultipleFile } = require("../../Functions/saveMultipleFile");
 
 const createExpense = async (req, res) => {
-
     const form = new formidable.IncomingForm();
-    form.keepExtensions = true
-
+    form.keepExtensions = true;
 
     form.parse(req, (err, fields, files) => {
         if (err) {
@@ -23,47 +18,34 @@ const createExpense = async (req, res) => {
 
         fields = cleanObject(formDataToObj(fields));
 
-        let expense = new ExpenseModel(fields)
+        let expense = new ExpenseModel(fields);
 
-        
-        let documents = files && files['documents[]'] && files['documents[]'].length > 0 ? saveMultipleFile(files['documents[]']) : null
-
-        
-
+        let documents = files && files["documents[]"] && files["documents[]"].length > 0 ? saveMultipleFile(files["documents[]"]) : null;
 
         if (documents) {
-
-            documents.then(data => {
-                console.log("Documents: ", data);
-                expense.documents = data
-                expense.save()
-                    .then(expense => {
-                        res.send({ message: 'expense created successfully', error: false, data: expense });
+            documents.then((data) => {
+                // console.log("Create Expense Data: ", data);
+                expense.documents = data;
+                expense
+                    .save()
+                    .then((expense) => {
+                        res.send({ message: "expense created successfully", error: false, data: expense });
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         res.send({ message: err.message, error: true });
                     });
-            })
-
-        }
-        else {
-
-            expense.save()
-                .then(expense => {
-                    res.send({ message: 'expense created successfully', error: false, data: expense });
-                })
-                .catch(err => {
-                    res.send({ message: err.message, error: true });
             });
-            
+        } else {
+            expense
+                .save()
+                .then((expense) => {
+                    res.send({ message: "expense created successfully", error: false, data: expense });
+                })
+                .catch((err) => {
+                    res.send({ message: err.message, error: true });
+                });
         }
-
-        
-
     });
+};
 
-
-
-}
-
-module.exports.createExpense = createExpense
+module.exports.createExpense = createExpense;

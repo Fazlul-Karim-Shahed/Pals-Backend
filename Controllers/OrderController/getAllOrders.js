@@ -15,7 +15,6 @@ const getAllOrders = async (req, res) => {
         };
     }
 
-    console.log(query);
 
     let order = await OrderModel.find(query.orderDate ? { orderDate: query.orderDate } : query.mobile ? { mobile: query.mobile } : {})
         .sort({ orderDate: -1 })
