@@ -24,7 +24,7 @@ const uploadFiles = async (req, res) => {
         const originalName = file.originalFilename || `upload-${Date.now()}`;
         const baseName = originalName.split(/[/\\]/).pop().split(".")[0]; // remove extension
 
-        console.log("Processing: ", baseName);
+        // console.log("Processing: ", baseName);
 
         try {
             const fileBuffer = await fs.promises.readFile(tempPath);

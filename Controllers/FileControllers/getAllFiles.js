@@ -14,7 +14,7 @@ const fetchAllCloudinaryFiles = async (prefix) => {
         const response = await cloudinary.api.resources({
             type: "upload",
             prefix: prefix,
-            max_results: 10000,
+            max_results: 100,
             next_cursor: nextCursor,
         });
 
