@@ -69,7 +69,7 @@ const saveMultipleFile = async (files) => {
                 },
                 (error, result) => {
                     if (error) {
-                        // console.error("Cloudinary upload failed:", error);
+                        console.error("Cloudinary upload failed:", error);
                         return null;
                     }
                     return {
