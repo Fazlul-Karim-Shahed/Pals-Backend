@@ -1,9 +1,4 @@
-
-
-
-
-
-const { model, Schema } = require('mongoose')
+const { model, Schema } = require("mongoose");
 
 const EventModel = model(
     "Event",
@@ -15,11 +10,10 @@ const EventModel = model(
             description: { type: String, default: "" },
             startDate: { type: Date, default: Date.now },
             endDate: { type: Date, default: Date.now },
-            link: { type: String, default: '' },
+            link: { type: String, default: "" },
         },
         { timestamps: true }
     )
 );
 
-
-module.exports.EventModel = EventModel
+module.exports.EventModel = EventModel;

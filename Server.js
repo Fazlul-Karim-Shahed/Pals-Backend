@@ -21,6 +21,7 @@ const ExpenseRouters = require("./Routers/ExpenseRouters");
 const ImageSliderRouters = require("./Routers/ImageSliderRouters");
 const FileRouters = require("./Routers/FileRouters");
 const EventRouters = require("./Routers/EventRouters");
+const PromoRouters = require("./Routers/PromoRouters");
 const cron = require("node-cron");
 const axios = require("axios");
 
@@ -79,6 +80,7 @@ app.use("/api/expense", ExpenseRouters);
 app.use("/api/files", FileRouters);
 app.use("/api/slider", ImageSliderRouters);
 app.use("/api/event", EventRouters);
+app.use("/api/promo", PromoRouters);
 
 app.get("/", (req, res) => res.sendFile(path.resolve("./Server.html")));
 
