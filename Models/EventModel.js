@@ -11,6 +11,7 @@ const EventModel = model(
             startDate: { type: Date, default: Date.now },
             endDate: { type: Date, default: Date.now },
             link: { type: String, default: "" },
+            products: [{ type: Schema.Types.ObjectId, ref: "Product", required: true }],
         },
         { timestamps: true }
     )

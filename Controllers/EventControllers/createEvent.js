@@ -5,6 +5,7 @@ const formidable = require("formidable");
 const { formDataToObj } = require("../../Functions/formDataToObj");
 const { saveAndGetFile } = require("../../Functions/saveAndGetFile");
 const { cleanObject } = require("../../Functions/cleanObject");
+const mongoose = require("mongoose");
 
 const createEvent = async (req, res) => {
     const form = new formidable.IncomingForm();
@@ -16,6 +17,11 @@ const createEvent = async (req, res) => {
         }
 
         fields = cleanObject(formDataToObj(fields));
+
+        if (fields.products && Array.isArray(fields.products)) {
+            const mongoose = require("mongoose");
+            fields.products = fields.products.map((id) => new mongoose.Types.ObjectId(id));
+        }
 
         let event = new EventModel(fields);
 
