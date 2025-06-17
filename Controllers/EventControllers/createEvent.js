@@ -25,31 +25,28 @@ const createEvent = async (req, res) => {
 
         let event = new EventModel(fields);
 
-        let promotionalImage = files.promotionalImage ? saveAndGetFile(files.promotionalImage[0]) : null;
+        console.log(event);
 
-        if (promotionalImage) {
-            promotionalImage.then((promotionalImage) => {
-                event.promotionalImage = promotionalImage;
+        const promotionalImage = files && files.promotionalImage.length > 0 ? saveAndGetFile(files.promotionalImage[0]) : null;
 
-                event
-                    .save()
-                    .then((event) => {
-                        res.send({ message: "image Slider created successfully", error: false, data: event });
-                    })
-                    .catch((err) => {
-                        res.send({ message: err.message, error: true });
-                    });
-            });
-        } else {
+        // console.log(promotionalImage);
+
+        promotionalImage.then((promotionalImage) => {
+            event.promotionalImage = promotionalImage;
+            event._id = event._id;
+
+            // console.log(promotionalImage);
             event
                 .save()
                 .then((event) => {
+                    console.log(event);
                     res.send({ message: "image Slider created successfully", error: false, data: event });
                 })
                 .catch((err) => {
-                    res.send({ message: err.message, error: true, data: err.message });
+                    console.log(err);
+                    res.send({ message: err.message, error: true });
                 });
-        }
+        });
     });
 };
 
